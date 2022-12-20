@@ -256,14 +256,9 @@ public class EasyRandom extends Random {
     }
     
     private <T> Constructor<T> getCanonicalConstructor(Class<T> recordType) {
-        RecordComponent[] recordComponents = recordType.getRecordComponents();
-        Class<?>[] componentTypes = new Class<?>[recordComponents.length];
-        for (int i = 0; i < recordComponents.length; i++) {
-            // recordComponents are ordered, see javadoc:
-            // "The components are returned in the same order that they are declared
-            // in the record header"
-            componentTypes[i] = recordComponents[i].getType();
-        }
+        var componentTypes = Arrays.stream(recordType.getRecordComponents())
+            .map(RecordComponent::getType)
+            .toArray(Class<?>[]::new);
         try {
             return recordType.getDeclaredConstructor(componentTypes);
         } catch (NoSuchMethodException e) {

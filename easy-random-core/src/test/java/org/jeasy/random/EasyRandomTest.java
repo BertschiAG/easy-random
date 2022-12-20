@@ -44,7 +44,6 @@ import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.jeasy.random.FieldPredicates.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -232,7 +231,7 @@ class EasyRandomTest {
         assertThat(distinctEnumBeans.size()).isGreaterThan(1);
     }
 
-    @Disabled
+    @Disabled("also failing on easy-random/master - so it's possible to check unit test during package phase")
     @Test
     void fieldsOfTypeClassShouldBeSkipped() {
         try {
