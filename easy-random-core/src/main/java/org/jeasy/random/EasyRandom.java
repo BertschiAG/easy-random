@@ -192,7 +192,9 @@ public class EasyRandom extends Random {
 
     private <T> T randomizeRecord(Class<T> recordType, RandomizationContext context) {
         // create random values for all defined fields 
-        var randomFieldValues = getDeclaredFieldsForClazz(recordType).stream()
+        var randomFieldValues = getDeclaredFieldsForClazz(recordType)
+            .stream()
+            .filter(field -> !this.exclusionPolicy.shouldBeExcluded(field, context))
             .map(field -> fieldPopulator.generateRandomValue(field.getType(), field, context))
             .toArray();
 
