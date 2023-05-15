@@ -103,6 +103,16 @@ class EasyRandomTest {
     }
 
     @Test
+    void staticRecordFieldsShouldNotBePopulated() {
+        try {
+            HumanRecord human = easyRandom.nextObject(HumanRecord.class);
+            assertThat(human).isNotNull();
+        } catch (Exception e) {
+            fail("Should be able to populate types with public static final fields.", e);
+        }
+    }
+
+    @Test
     void immutableBeansShouldBePopulated() {
         final ImmutableBean immutableBean = easyRandom.nextObject(ImmutableBean.class);
         assertThat(immutableBean).hasNoNullFieldsOrProperties();
